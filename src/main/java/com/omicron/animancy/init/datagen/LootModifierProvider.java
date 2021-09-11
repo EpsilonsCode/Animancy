@@ -1,6 +1,7 @@
 package com.omicron.animancy.init.datagen;
 
 import com.omicron.animancy.Animancy;
+
 import com.omicron.animancy.data.loot_modifiers.BookModifier;
 import com.omicron.animancy.init.registries.LootModifierRegistry;
 import net.minecraft.data.DataGenerator;

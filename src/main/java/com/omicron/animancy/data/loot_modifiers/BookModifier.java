@@ -1,7 +1,7 @@
 package com.omicron.animancy.data.loot_modifiers;
 
 import com.google.gson.JsonObject;
-import com.omicron.animancy.init.registries.ItemRegistry;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameterSets;
