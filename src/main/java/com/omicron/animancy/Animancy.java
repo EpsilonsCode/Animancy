@@ -14,6 +14,6 @@ public class Animancy
     public Animancy()
     {
         CommonInitialization.init();
-        
+
     }
 }
