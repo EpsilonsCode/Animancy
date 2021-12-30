@@ -26,6 +26,10 @@ public class ResearchManager extends JsonReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> pObject, IResourceManager pResourceManager, IProfiler pProfiler) {
-
+        System.out.println("testing");
+        for(Map.Entry<ResourceLocation, JsonElement> entry : pObject.entrySet())
+        {
+            System.out.println("test123");
+        }
     }
 }

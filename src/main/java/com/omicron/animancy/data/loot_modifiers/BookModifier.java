@@ -2,10 +2,10 @@ package com.omicron.animancy.data.loot_modifiers;
 
 import com.google.gson.JsonObject;
 
+import com.omicron.animancy.init.registries.ItemRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.ResourceLocation;
@@ -34,7 +34,7 @@ public class BookModifier extends LootModifier
         LootTable table = context.getLootTable(context.getQueriedLootTableId());
         if(LootParameterSets.getKey(table.getParamSet()).getPath().equals("chest"));
         {
-            //generatedLoot.add(new ItemStack(ItemRegistry.BOOK_ITEM.get()));
+            generatedLoot.add(new ItemStack(ItemRegistry.BOOK_ITEM.get()));
         }
         return generatedLoot;
     }

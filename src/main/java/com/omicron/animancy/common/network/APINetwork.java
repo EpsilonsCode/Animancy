@@ -25,6 +25,12 @@ public class APINetwork {
                 () -> "1.0",
                 s -> true,
                 s -> true);
+        addMessage(TestPacket.class)
+                .encoder(TestPacket::toBytes)
+                .decoder(TestPacket::new)
+                .consumer(TestPacket::handle)
+                .add();
+
     }
 
     public static SimpleChannel getInstance()

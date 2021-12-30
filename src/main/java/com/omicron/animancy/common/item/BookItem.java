@@ -2,7 +2,10 @@ package com.omicron.animancy.common.item;
 
 import com.omicron.animancy.Test2;
 import com.omicron.animancy.client.BookScreen;
+import com.omicron.animancy.common.network.APINetwork;
+import com.omicron.animancy.common.network.TestPacket;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,9 +27,17 @@ public class BookItem extends Item {
             System.out.println(a.get().getRegistryName());
         }
         if(world.isClientSide())
+        {
             Minecraft.getInstance().setScreen(new BookScreen());
+        }
         System.out.println("test");
         ItemStack itemStack = playerEntity.getItemInHand(hand);
+        Entity entity = Minecraft.getInstance().crosshairPickEntity;
+        if(entity != null)
+        {
+            //APINetwork.sendToServer(new TestPacket(entity.getId()));
+            System.out.println(entity);
+        }
         return ActionResult.success(itemStack);
     }
 }
