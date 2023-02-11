@@ -7,4 +7,5 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 public interface IAnimancyResearch {
 
 
+
 }
