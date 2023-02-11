@@ -1,14 +1,14 @@
 package com.omicron.animancy.common.network;
 
 import com.google.common.collect.Sets;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.PrioritizedGoal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.Set;
 import java.util.function.Supplier;
@@ -21,13 +21,13 @@ public class TestPacket implements IMessage{
         this.id = id;
     }
 
-    public TestPacket(PacketBuffer buf)
+    public TestPacket(FriendlyByteBuf buf)
     {
         id = buf.readInt();
     }
 
     @Override
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeInt(id);
     }
 
@@ -35,11 +35,11 @@ public class TestPacket implements IMessage{
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
            Entity entity1 = ctx.get().getSender().getCommandSenderWorld().getEntity(id);
-            if(entity1 instanceof MobEntity)
+            if(entity1 instanceof Mob)
             {
-                MobEntity entity = (MobEntity) entity1;
+                Mob entity = (Mob) entity1;
                 Set<Goal> essa = Sets.newLinkedHashSet();
-                for(PrioritizedGoal goal : entity.goalSelector.availableGoals)
+                for(WrappedGoal goal : entity.goalSelector.availableGoals)
                 {
                     essa.add(goal.getGoal());
                 }
@@ -48,7 +48,7 @@ public class TestPacket implements IMessage{
                     entity.goalSelector.removeGoal(goal);
                 }
                 essa = Sets.newLinkedHashSet();
-                for(PrioritizedGoal goal : entity.targetSelector.availableGoals)
+                for(WrappedGoal goal : entity.targetSelector.availableGoals)
                 {
                     essa.add(goal.getGoal());
                 }
@@ -56,7 +56,7 @@ public class TestPacket implements IMessage{
                 {
                     entity.targetSelector.removeGoal(goal);
                 }
-                entity.goalSelector.addGoal(7, new LookAtGoal(entity, PlayerEntity.class, 6.0F));
+                entity.goalSelector.addGoal(7, new LookAtPlayerGoal(entity, Player.class, 6.0F));
             }
         });
         return true;

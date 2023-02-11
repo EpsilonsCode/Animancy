@@ -1,55 +1,54 @@
 package com.omicron.animancy.data.loot_modifiers;
 
-import com.google.gson.JsonObject;
-
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.omicron.animancy.init.registries.ItemRegistry;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import com.omicron.animancy.init.registries.LootModifierRegistry;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 public class BookModifier extends LootModifier
 {
+    public static final RegistryObject<Codec<BookModifier>> CODEC = LootModifierRegistry.GLM_REGISTER.register("book_modifier", () ->
+            RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, BookModifier::new)
+            ));
 
+    public static void dummy()
+    {
+        CODEC.getId();
+    }
     /**
      * Constructs a LootModifier.
      *
      * @param conditionsIn the ILootConditions that need to be matched before the loot is modified.
      */
-    public BookModifier(ILootCondition[] conditionsIn) {
+    public BookModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
     @Nonnull
     @Override
-    protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 
         LootTable table = context.getLootTable(context.getQueriedLootTableId());
-        if(LootParameterSets.getKey(table.getParamSet()).getPath().equals("chest"));
+        if(LootContextParamSets.getKey(table.getParamSet()).getPath().equals("chest"));
         {
             generatedLoot.add(new ItemStack(ItemRegistry.BOOK_ITEM.get()));
         }
         return generatedLoot;
     }
 
-    public static class Serializer extends GlobalLootModifierSerializer<BookModifier>
-    {
-
-        @Override
-        public BookModifier read(ResourceLocation location, JsonObject object, ILootCondition[] ailootcondition) {
-            return new BookModifier(ailootcondition);
-        }
-
-        @Override
-        public JsonObject write(BookModifier instance) {
-            return makeConditions(instance.conditions);
-        }
+    @Override
+    public Codec<? extends IGlobalLootModifier> codec() {
+        return CODEC.get();
     }
 }

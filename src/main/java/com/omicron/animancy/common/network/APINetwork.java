@@ -2,11 +2,11 @@ package com.omicron.animancy.common.network;
 
 import com.omicron.animancy.Animancy;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 public class APINetwork {
 
@@ -28,7 +28,7 @@ public class APINetwork {
         addMessage(TestPacket.class)
                 .encoder(TestPacket::toBytes)
                 .decoder(TestPacket::new)
-                .consumer(TestPacket::handle)
+                .consumerNetworkThread(TestPacket::handle)
                 .add();
 
     }
@@ -43,7 +43,7 @@ public class APINetwork {
         return INSTANCE.messageBuilder(type, nextID());
     }
 
-    public static void sendToClient(Object packet, ServerPlayerEntity player)
+    public static void sendToClient(Object packet, ServerPlayer player)
     {
         INSTANCE.sendTo(packet, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
     }

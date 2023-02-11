@@ -2,11 +2,11 @@ package com.omicron.animancy.init.registries;
 
 import com.omicron.animancy.Animancy;
 import com.omicron.animancy.common.item.BookItem;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ItemRegistry {
 
