@@ -18,6 +18,7 @@ import net.minecraftforge.registries.NewRegistryEvent;
 
 public class CommonInitialization
 {
+    public static ResearchManager researchManager;
 
     public static void init()
     {
@@ -26,7 +27,7 @@ public class CommonInitialization
         bus.addListener(GatherDataHandler::gatherData);
         bus.addListener(CommonInitialization::commonSetup);
         MinecraftForge.EVENT_BUS.addListener(CommonInitialization::tick);
-        MinecraftForge.EVENT_BUS.addListener(CommonInitialization::testAddReload);
+        MinecraftForge.EVENT_BUS.addListener(CommonInitialization::onAddReloadListener);
     }
 
     private static void register(NewRegistryEvent event)
@@ -34,9 +35,10 @@ public class CommonInitialization
 
     }
 
-    private static void testAddReload(AddReloadListenerEvent event)
+    private static void onAddReloadListener(AddReloadListenerEvent event)
     {
-        event.addListener(new ResearchManager());
+        researchManager = new ResearchManager();
+        event.addListener(researchManager);
     }
 
     private static void tick(LivingSpawnEvent event)

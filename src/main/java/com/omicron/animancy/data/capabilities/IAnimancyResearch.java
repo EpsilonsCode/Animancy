@@ -5,6 +5,10 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
 @AutoRegisterCapability
 public interface IAnimancyResearch {
+    boolean isResearchDone(ResourceLocation research);
+
+    boolean isStageDone(ResourceLocation research, ResourceLocation stage);
+
 
 
 

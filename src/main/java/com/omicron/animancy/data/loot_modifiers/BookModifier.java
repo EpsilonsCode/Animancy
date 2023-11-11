@@ -16,16 +16,18 @@ import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nonnull;
 
-public class BookModifier extends LootModifier
-{
+public class BookModifier extends LootModifier {
     public static final RegistryObject<Codec<BookModifier>> CODEC = LootModifierRegistry.GLM_REGISTER.register("book_modifier", () ->
-            RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, BookModifier::new)
+            RecordCodecBuilder.create(inst -> {
+
+                        return codecStart(inst).apply(inst, BookModifier::new);
+                    }
             ));
 
-    public static void dummy()
-    {
+    public static void dummy() {
         CODEC.getId();
     }
+
     /**
      * Constructs a LootModifier.
      *
@@ -38,10 +40,13 @@ public class BookModifier extends LootModifier
     @Nonnull
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-
+        //System.out.println("ez");
+        //System.out.println(LootContextParamSets.getKey(context.getLootTable(context.getQueriedLootTableId()).getParamSet()));
         LootTable table = context.getLootTable(context.getQueriedLootTableId());
-        if(LootContextParamSets.getKey(table.getParamSet()).getPath().equals("chest"));
-        {
+        String string = LootContextParamSets.getKey(table.getParamSet()).getPath();
+        if (string.equals("chest")) {
+            System.out.println(string);
+            //System.out.println(string.equals("chest123"));
             generatedLoot.add(new ItemStack(ItemRegistry.BOOK_ITEM.get()));
         }
         return generatedLoot;

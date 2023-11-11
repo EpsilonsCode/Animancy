@@ -9,6 +9,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
+import com.omicron.animancy.Test;
 
 import java.util.function.Supplier;
 
@@ -18,7 +19,7 @@ public class Test2 {
 
     public static final DeferredRegister<Test> SPELLS = DeferredRegister.create(SPELL_KEY , Animancy.MODID);
 
-    public static final Supplier<IForgeRegistry<Test>> a = SPELLS.makeRegistry(() -> new RegistryBuilder<>());
+    public static final Supplier<IForgeRegistry<Test>> a = SPELLS.makeRegistry(RegistryBuilder::new);
 
     public static void setup(IEventBus bus) {
         SPELLS.register(bus);

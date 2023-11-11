@@ -35,28 +35,14 @@ public class TestPacket implements IMessage{
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
            Entity entity1 = ctx.get().getSender().getCommandSenderWorld().getEntity(id);
-            if(entity1 instanceof Mob)
+            if(entity1 instanceof Mob entity)
             {
-                Mob entity = (Mob) entity1;
-                Set<Goal> essa = Sets.newLinkedHashSet();
-                for(WrappedGoal goal : entity.goalSelector.availableGoals)
-                {
-                    essa.add(goal.getGoal());
-                }
-                for(Goal goal : essa)
-                {
-                    entity.goalSelector.removeGoal(goal);
-                }
-                essa = Sets.newLinkedHashSet();
-                for(WrappedGoal goal : entity.targetSelector.availableGoals)
-                {
-                    essa.add(goal.getGoal());
-                }
-                for(Goal goal : essa)
-                {
-                    entity.targetSelector.removeGoal(goal);
-                }
+                entity.goalSelector.removeAllGoals();
+                entity.targetSelector.removeAllGoals();
                 entity.goalSelector.addGoal(7, new LookAtPlayerGoal(entity, Player.class, 6.0F));
+                entity.goalSelector.availableGoals.forEach((wrappedGoal -> {
+                    System.out.println(wrappedGoal);
+                }));
             }
         });
         return true;
