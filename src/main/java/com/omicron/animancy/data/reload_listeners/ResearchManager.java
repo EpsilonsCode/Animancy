@@ -3,6 +3,7 @@ package com.omicron.animancy.data.reload_listeners;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.omicron.animancy.data.research.ResearchEntry;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.world.level.storage.loot.Deserializers;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -18,7 +19,7 @@ public class ResearchManager extends SimpleJsonResourceReloadListener {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Gson GSON = Deserializers.createLootTableSerializer().create();
-    private Map<ResourceLocation, LootTable> tables = ImmutableMap.of();
+    public Map<ResourceLocation, ResearchEntry> researchEntries = ImmutableMap.of();
 
     public ResearchManager() {
         super(GSON, "research");
@@ -29,7 +30,9 @@ public class ResearchManager extends SimpleJsonResourceReloadListener {
         System.out.println("testing");
         for(Map.Entry<ResourceLocation, JsonElement> entry : pObject.entrySet())
         {
-            System.out.println("test123");
+            System.out.println(entry.getKey());
         }
     }
+
+
 }
