@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.omicron.animancy.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "animancy.refmap.json",
+  "mixins": [
+    "ItemEntityMixin",
+    "SimpleCriterionTriggerMixin",
+    "TestMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
